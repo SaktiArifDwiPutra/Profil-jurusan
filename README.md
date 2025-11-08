@@ -25,6 +25,7 @@ Dibuat untuk menampilkan informasi jurusan sekaligus sebagai sistem manajemen da
 - Fitur **Komentar Berita**:
   - Nama komentar otomatis sesuai akun login.
   - **Admin** bisa hapus/edit komentar siapa pun.
+  - **Guru/Siswa** bisa hapus/edit komentar hanya milik sendiri.
   - **Guest** hanya bisa membaca komentar.
 
 ---
