@@ -1,0 +1,505 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.wrapper {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  flex: 1; /* bagian ini yang dorong footer ke bawah */
+}
+
+.footer {
+  background: #f8f9fa;
+  padding: 10px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
+/* VARIABLES */
+:root{
+  --bg: #f5f7fa;
+  --text: #2d2d2d;
+  --muted: #666;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  --accent-gradient: linear-gradient(90deg,#0d6efd,#6610f2);
+}
+
+/* RESET & BASE */
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+
+/* NAVBAR */
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid #e6e6e6;
+}
+.navbar .nav-link {
+  color: #444 !important;
+  font-weight: 500;
+  position: relative;
+  transition: color .2s;
+}
+.navbar .nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: #0d6efd;
+  transition: width .25s ease-in-out;
+}
+.navbar .nav-link:hover { color: #0d6efd !important; }
+.navbar .nav-link:hover::after { width: 100%; }
+.navbar .nav-link.active { color: #0d6efd !important; font-weight: 600; }
+.navbar .nav-link.logout { color: #dc3545 !important; font-weight: 600; }
+.navbar .nav-link.logout::after { background: #dc3545; }
+
+/* TYPOGRAPHY & COMMONS */
+h1,h2,h3,h4,h5 { margin: 0; font-weight: 600; color: #1a1a1a; }
+.card {
+  background: #fff;
+  border-radius: 12px;
+  border: none;
+  box-shadow: var(--card-shadow);
+}
+.btn-primary { border-radius: 8px; font-weight: 500; }
+main { flex: 1; }
+.footer {
+  background: #fff;
+  border-top: 1px solid #e6e6e6;
+  padding: 15px 0;
+  text-align: center;
+}
+
+/* TABLE HELPERS */
+.table td, .table th { vertical-align: middle; }
+.table td.wrap-text { max-width: 300px; white-space: normal; word-wrap: break-word; }
+
+/* LAYOUT: GOLDEN (left main / right sidebar) */
+.layout-golden {
+  display: grid;
+  grid-template-columns: 61.8% 38.2%;
+  gap: 22px;
+  align-items: start;
+}
+.layout-golden .left-col { min-width: 0; }
+.layout-golden .sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  align-self: start;
+}
+
+/* SIDEBAR CARDS */
+.sidebar .stat-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 6px 14px rgba(13,110,253,0.06);
+  border: 1px solid rgba(0,0,0,0.04);
+}
+.stat-card h6 { margin: 0 0 6px; font-size: .95rem; font-weight: 600; color:#1a1a1a; }
+.stat-card .stat-value { font-size: 1.35rem; font-weight: 700; }
+
+/* RECENT LIST */
+.sidebar .recent-list {
+  max-height: 260px;
+  overflow: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.recent-item {
+  display:flex;
+  justify-content:space-between;
+  gap:8px;
+  align-items:center;
+  padding:8px;
+  border-radius:8px;
+  background: linear-gradient(180deg, rgba(0,0,0,0.01), rgba(0,0,0,0.01));
+  font-size:0.92rem;
+}
+
+/* RESPONSIVE: stack layout on small screens */
+@media (max-width: 900px) {
+  .layout-golden { grid-template-columns: 1fr; }
+  .sidebar { order: 2; }
+  .left-col { order: 1; }
+}
+
+/* =========================
+   CARD: SISWA / GURU (shared narrow vertical)
+   ========================= */
+.siswa-card-col, .guru-card-col { display: flex; justify-content: center; }
+
+.siswa-card {
+  width: 200px;
+  height: 300px;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform .18s ease, box-shadow .18s ease;
+  background: linear-gradient(180deg, #ffffff 0%, #fafcff 100%);
+  border: 1px solid rgba(0,0,0,0.06);
+}
+.siswa-card .card-body {
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  align-items:flex-start;
+  justify-content:flex-start;
+  padding:18px;
+  height:100%;
+  text-align:left;
+}
+.siswa-card .card-body > .d-flex {
+  flex-direction: column !important;
+  align-items: flex-start;
+  gap:6px;
+  width:100%;
+}
+.siswa-card .card-title { font-size: 1.02rem; font-weight:700; color:#111; margin-bottom:0; line-height:1.15; text-align:left; }
+.siswa-card .badge { display:inline-block; margin-top:6px; align-self:flex-start; font-size:.78rem; padding:6px 10px; }
+.siswa-card .card-text, .siswa-card .card-body small { color: var(--muted); font-size: .92rem; }
+
+.siswa-card:hover { transform: translateY(-8px) rotate(-1deg) scale(1.03); box-shadow: 0 18px 40px rgba(16,24,40,0.12); cursor:pointer; }
+.siswa-card:focus, .siswa-card:active { outline:none; transform: translateY(-6px) scale(1.02); }
+
+/* mobile card */
+@media (max-width: 720px) {
+  .siswa-card { width:100%; height:auto; padding:14px 12px; }
+}
+
+/* =========================
+   MODAL DETAIL: shared detail-block + header stripe
+   ========================= */
+.detail-block {
+  padding: 0.9rem 1.25rem;
+  border-radius: 8px;
+  background: linear-gradient(180deg, rgba(13,110,253,0.02), rgba(102,16,242,0.01));
+}
+.detail-block p {
+  margin: 0 0 0.6rem 0;
+  padding-left: 36px;
+  position: relative;
+  font-size: 0.98rem;
+  color: #212529;
+}
+.detail-block p::before {
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-size: 1.05rem;
+  line-height: 1;
+  transform: translateY(2px);
+}
+
+/* modal small header stripe */
+.modal-header .modal-title {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:700;
+}
+.modal-header .modal-title::after {
+  content: "";
+  display:inline-block;
+  width:36px;
+  height:6px;
+  border-radius:6px;
+  background: var(--accent-gradient);
+  transform: translateY(-2px);
+  opacity: .95;
+}
+
+/* vertical modal shared behaviour */
+.modal.vertical .modal-dialog { max-width: 340px; width: 100%; }
+.modal.vertical .modal-content { border-radius: 14px; overflow: hidden; }
+.modal.vertical .modal-header { padding: 0.6rem 1rem; }
+.modal.vertical .modal-header .modal-title::after { display: none; }
+.modal.vertical .modal-body { padding: 0.8rem 1rem; max-height: 70vh; overflow: auto; }
+
+/* modal export wrapper */
+.modal-footer {
+  position: relative;
+  padding-bottom: 56px;
+}
+.modal-footer .modal-export-wrap {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 8px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+  align-items:center;
+  z-index:3;
+}
+.modal-footer .btn-export-single {
+  min-width:140px;
+  padding:6px 12px;
+  font-size:.9rem;
+  border-radius:8px;
+}
+@media (max-width:480px) {
+  .modal-footer { padding-bottom:90px; }
+  .modal-footer .modal-export-wrap { flex-direction:column; width:calc(100% - 32px); left:50%; transform:translateX(-50%); }
+  .modal-footer .btn-export-single { width:100%; }
+}
+
+/* utilities */
+.wrap-text { white-space: pre-wrap; word-wrap: break-word; }
+#modal-edit-form { transition: opacity .16s ease, transform .16s ease; }
+
+/* =========================
+   DETAIL: SISWA (icons + title-break)
+   ========================= */
+#modal-detail-view { padding:0.9rem 1.25rem; border-radius:8px; background: linear-gradient(180deg, rgba(13,110,253,0.02), rgba(102,16,242,0.01)); }
+#modal-detail-view p { margin: 0 0 0.6rem 0; padding-left:36px; position:relative; font-size:0.98rem; color:#212529; }
+#modal-detail-view p:nth-of-type(1)::before { content: "🆔"; }
+#modal-detail-view p:nth-of-type(2)::before { content: "🚻"; }
+#modal-detail-view p:nth-of-type(3)::before { content: "📅"; }
+#modal-detail-view p:nth-of-type(4)::before { content: "🏫"; }
+#modal-detail-view p:nth-of-type(5)::before { content: "📞"; }
+#modal-detail-view p:nth-of-type(6)::before { content: "📍"; }
+
+/* Title-for-siswa: label above, name below (line-break) */
+#detailModal .modal-header .modal-title {
+  font-size: .95rem;
+  color: #555;
+  font-weight: 600;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:flex-start;
+}
+#detailModal .modal-header .modal-title span#modal-nama-view {
+  display:block;
+  margin-top:6px;
+  font-weight:700;
+  font-size:1.05rem;
+  color:#111;
+  line-height:1.15;
+}
+
+/* vertical variant for siswa modal */
+#detailModal.vertical #modal-detail-view { background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98)); padding:0.6rem 0.2rem; }
+#detailModal.vertical #modal-detail-view p { padding-left:34px; }
+
+/* =========================
+   DETAIL: GURU (icons + title-break)
+   ========================= */
+#detailModalGuru #modal-guru-view { padding:0.9rem 1.25rem; border-radius:8px; background: linear-gradient(180deg, rgba(13,110,253,0.02), rgba(102,16,242,0.01)); }
+#detailModalGuru #modal-guru-view p { margin:0 0 0.6rem 0; padding-left:36px; position:relative; font-size:0.98rem; color:#212529; }
+#detailModalGuru #modal-guru-view p:nth-of-type(1)::before { content:"🆔"; }  /* NIP */
+#detailModalGuru #modal-guru-view p:nth-of-type(2)::before { content:"✉️"; }  /* Email */
+#detailModalGuru #modal-guru-view p:nth-of-type(3)::before { content:"🚻"; }  /* JK */
+#detailModalGuru #modal-guru-view p:nth-of-type(4)::before { content:"📞"; }  /* No HP */
+#detailModalGuru #modal-guru-view p:nth-of-type(5)::before { content:"📚"; }  /* Mapel */
+
+#detailModalGuru .modal-header .modal-title {
+  font-size: .95rem;
+  color: #555;
+  font-weight: 600;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  align-items:flex-start;
+}
+#detailModalGuru .modal-header .modal-title span#modal-guru-nama {
+  display:block;
+  margin-top:6px;
+  font-weight:700;
+  font-size:1.05rem;
+  color:#111;
+  line-height:1.15;
+}
+
+/* vertical behaviour (JS toggles .vertical on #detailModalGuru) */
+#detailModalGuru.vertical .modal-dialog { max-width:340px; width:100%; }
+#detailModalGuru.vertical .modal-content { border-radius:14px; overflow:hidden; }
+#detailModalGuru.vertical .modal-header { padding:0.6rem 1rem; }
+#detailModalGuru.vertical .modal-body { padding:0.8rem 1rem; max-height:70vh; overflow:auto; }
+#detailModalGuru.vertical #modal-guru-view { background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98)); padding:0.6rem 0.2rem; }
+
+/* =========================
+   KELAS: kartu + modal (already styled, kept consistent)
+   ========================= */
+.kelas-card-col { display:flex; justify-content:center; }
+.kelas-card {
+  width: 220px;
+  min-height:140px;
+  border-radius:12px;
+  background: linear-gradient(180deg,#fff,#fafcff);
+  border: 1px solid rgba(0,0,0,0.06);
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+.kelas-card .card-title { font-size:1rem; font-weight:700; color:#111; text-align:left; }
+.kelas-card .card-sub { color:#666; font-size:.92rem; text-align:left; }
+.kelas-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 18px 40px rgba(16,24,40,0.08); cursor:pointer; }
+@media (max-width:720px) { .kelas-card { width:100%; } }
+
+#detailModalKelas .modal-header .modal-title {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-weight:700;
+  font-size:.95rem;
+  color:#555;
+  align-items:flex-start;
+}
+#detailModalKelas .modal-header .modal-title span { display:block; font-size:1.05rem; color:#111; margin-top:4px; }
+
+/* modal content */
+#detailModalKelas #modal-kelas-view {
+  padding:.9rem 1.25rem;
+  border-radius:8px;
+  background: linear-gradient(180deg, rgba(13,110,253,0.02), rgba(102,16,242,0.01));
+}
+#detailModalKelas #modal-kelas-view p {
+  margin:0 0 .6rem 0;
+  padding-left:36px;
+  position:relative;
+  font-size:.98rem;
+  color:#212529;
+}
+#detailModalKelas #modal-kelas-view p::before {
+  position:absolute;
+  left:0;
+  top:0;
+  font-size:1.05rem;
+  transform: translateY(2px);
+}
+#detailModalKelas #modal-kelas-view p:nth-of-type(1)::before { content:"🏫"; }
+#detailModalKelas #modal-kelas-view p:nth-of-type(2)::before { content:"👩‍🏫"; }
+#detailModalKelas #modal-kelas-view p:nth-of-type(3)::before { content:"🧑‍🤝‍🧑"; }
+#detailModalKelas #modal-kelas-view p:nth-of-type(4)::before { content:"📋"; }
+
+#detailModalKelas.vertical .modal-dialog { max-width:340px; width:100%; }
+#detailModalKelas.vertical .modal-content { border-radius:14px; overflow:hidden; }
+#detailModalKelas.vertical .modal-body { padding:.8rem 1rem; max-height:70vh; overflow:auto; }
+#detailModalKelas.vertical #modal-kelas-view { background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98)); padding:.6rem .2rem; }
+
+/* =========================
+   MAPEL: card + modal (left-aligned titles, guru list)
+   ========================= */
+.mapel-card-col { display:flex; justify-content:center; }
+.mapel-card {
+  width:220px;
+  min-height:130px;
+  border-radius:14px;
+  background: linear-gradient(180deg,#fff 0%, #fafcff 100%);
+  border: 1px solid rgba(0,0,0,0.06);
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  transition: transform .18s ease, box-shadow .18s ease;
+  box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+}
+.mapel-card .card-body { padding:0; }
+.mapel-card .card-title { font-size:1rem; font-weight:700; color:#111; margin-bottom:0; text-align:left; }
+.mapel-card .card-text, .mapel-card .card-sub { color:#666; font-size:.92rem; text-align:left; }
+.mapel-card .badge { font-size:.78rem; padding:6px 10px; border-radius:999px; align-self:flex-end; }
+.mapel-card .mapel-guru { margin-top:6px; font-size:.88rem; color:#555; max-height:42px; overflow:hidden; display:-webkit-box;  -webkit-box-orient:vertical; }
+.mapel-card:hover { transform: translateY(-8px) scale(1.02); box-shadow: 0 18px 40px rgba(16,24,40,0.12); cursor:pointer; }
+@media (max-width:720px) { .mapel-card { width:100%; } }
+
+/* modal mapel */
+#detailModalMapel .modal-header .modal-title {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  font-weight:700;
+  font-size:.95rem;
+  color:#555;
+  align-items:flex-start;
+}
+#detailModalMapel .modal-header .modal-title span#modal-mapel-nama {
+  display:block; font-size:1.05rem; color:#111; font-weight:700; margin-top:4px;
+}
+#detailModalMapel #modal-mapel-view {
+  padding:.9rem 1.25rem; border-radius:8px;
+  background: linear-gradient(180deg, rgba(13,110,253,0.02), rgba(102,16,242,0.01));
+}
+#detailModalMapel #modal-mapel-view p {
+  margin:0 0 .6rem 0; padding-left:36px; position:relative; font-size:.98rem; color:#212529;
+}
+#detailModalMapel #modal-mapel-view p::before { position:absolute; left:0; top:0; font-size:1.05rem; transform:translateY(2px); }
+#detailModalMapel #modal-mapel-view p:nth-of-type(1)::before { content:"📘"; } /* Nama */
+#detailModalMapel #modal-mapel-view p:nth-of-type(2)::before { content:"🏷️"; } /* Kategori */
+#detailModalMapel #modal-mapel-view p:nth-of-type(3)::before { content:"👩‍🏫"; } /* Guru */
+
+#detailModalMapel #detail-guru-list { margin-top:6px; display:flex; flex-direction:column; gap:6px; }
+#detailModalMapel #detail-guru-list div { font-size:.95rem; color:#333; padding-left:0; }
+
+#detailModalMapel.vertical .modal-dialog { max-width:340px; width:100%; }
+#detailModalMapel.vertical .modal-content { border-radius:14px; overflow:hidden; }
+#detailModalMapel.vertical .modal-header { padding:.6rem 1rem; }
+#detailModalMapel.vertical .modal-body { padding:.8rem 1rem; max-height:70vh; overflow:auto; }
+#detailModalMapel.vertical #modal-mapel-view { background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,250,255,0.98)); padding:.6rem .2rem; }
+
+/* modal export wrapper for mapel */
+#detailModalMapel .modal-footer { position:relative; padding-bottom:56px; }
+#detailModalMapel .modal-footer .modal-export-wrap { position:absolute; left:50%; transform:translateX(-50%); bottom:8px; display:flex; gap:8px; }
+#detailModalMapel .modal-footer .btn-export-single { min-width:140px; padding:6px 12px; border-radius:8px; }
+
+/* =========================
+   GLOBAL OVERRIDES: force left alignment for card titles/content
+   ========================= */
+.card .card-title,
+.siswa-card .card-title,
+.guru-card .card-title,
+.kelas-card .card-title,
+.mapel-card .card-title,
+.card h5, .card h6 {
+  text-align: left !important;
+}
+.card .card-body,
+.card .card-header,
+.siswa-card .card-body,
+.kelas-card {
+  text-align: left;
+  align-items: flex-start; /* flex children align start */
+}
+.card .card-body .d-flex,
+.card .card-body > .d-flex {
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+
+/* mobile safety */
+@media (max-width:720px) {
+  .card .card-title,
+  .siswa-card .card-title,
+  .guru-card .card-title,
+  .kelas-card .card-title,
+  .mapel-card .card-title {
+    text-align: left !important;
+  }
+}
+
+/* End of CSS */
