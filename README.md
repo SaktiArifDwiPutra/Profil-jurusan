@@ -86,7 +86,6 @@ Dibuat untuk menampilkan informasi jurusan sekaligus sebagai sistem manajemen da
 ## 💡 Fitur Tambahan
 - 🔍 **Search engine** di setiap tabel.
 - 📤 **Export PDF / CSV**.
-- 👋 **Sambutan selamat datang** untuk admin saat login.
 - 🔄 **Sistem login/logout** aman dengan session.
 - ⚙️ **Validasi role** di setiap halaman.
 
