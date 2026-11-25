@@ -1,0 +1,132 @@
+/* =========================================================
+   Static Portfolio Demo — Print Stylesheet (PDF Replacement)
+   Mirrors Laravel DomPDF export templates in resources/views/*/export-pdf*.blade.php
+   ========================================================= */
+
+@media screen {
+  #print-area {
+    display: none;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 16mm;
+  }
+
+  html,
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: visible !important;
+    position: static !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+  }
+
+  body > *:not(#print-area) {
+    display: none !important;
+  }
+
+  #print-area {
+    display: block !important;
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+    color: #000;
+  }
+
+  .print-title {
+    text-align: center;
+    font-size: 15pt;
+    font-weight: 700;
+    margin: 0 0 6px 0;
+  }
+
+  .print-subtitle {
+    text-align: center;
+    font-size: 10pt;
+    color: #444;
+    margin: 0 0 18px 0;
+  }
+
+  .print-info-box {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    line-height: 1.5;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10pt;
+    margin-bottom: 16px;
+  }
+
+  .print-table th,
+  .print-table td {
+    border: 1px solid #000;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .print-table th {
+    background-color: #f2f2f2 !important;
+    font-weight: 700;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 10.5pt;
+    margin-bottom: 16px;
+  }
+
+  .print-detail-table td {
+    padding: 8px;
+    border-bottom: 1px solid #e5e5e5;
+    vertical-align: top;
+  }
+
+  .print-detail-table td.label {
+    width: 30%;
+    font-weight: 700;
+  }
+
+  .print-detail-table td.value {
+    width: 70%;
+  }
+
+  .print-section {
+    margin-top: 14px;
+  }
+
+  .print-section-title {
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .print-list-item {
+    margin: 4px 0;
+  }
+
+  .print-meta {
+    margin-top: 16px;
+    font-size: 8.5pt;
+    color: #555;
+    text-align: right;
+  }
+}
+

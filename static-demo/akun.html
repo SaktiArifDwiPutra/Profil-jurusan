@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Akun - Profil Jurusan RPL</title>
+
+  <link rel="icon" type="image/jpeg" href="assets/logo/logoril3.jpeg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/print.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <div id="app-header"></div>
+
+  <div class="container mt-4 flex-grow-1">
+    <div class="d-flex justify-content-between mb-3 align-items-center">
+      <h4>Data Akun</h4>
+      <button class="btn btn-success" data-bs-toggle="collapse" data-bs-target="#formAdd">Tambah Akun</button>
+    </div>
+
+    <div id="formAdd" class="collapse card p-3 mb-3">
+      <form id="formTambahAkun" class="row g-2" novalidate>
+        <div class="col-md-3">
+          <input id="add-username" name="username" class="form-control" placeholder="Username" required>
+        </div>
+        <div class="col-md-3">
+          <input id="add-password" name="password" type="password" class="form-control" placeholder="Password" required>
+        </div>
+        <div class="col-md-3">
+          <select id="roleSelect" name="role" class="form-select" required>
+            <option value="">Pilih Role</option>
+            <option value="guru">Guru</option>
+            <option value="siswa">Siswa</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="col-md-3 d-flex gap-2">
+          <div class="w-50 d-none" id="siswaSelect">
+            <select id="add-id-siswa" name="id_siswa" class="form-select"></select>
+          </div>
+          <div class="w-50 d-none" id="guruSelect">
+            <select id="add-id-guru" name="id_guru" class="form-select"></select>
+          </div>
+          <button type="submit" class="btn btn-primary flex-grow-1">Simpan</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="d-flex justify-content-between mb-2 align-items-center flex-wrap gap-2">
+      <div class="input-group w-50" style="min-width:220px;">
+        <span class="input-group-text"><i class="fa fa-search"></i></span>
+        <input type="text" id="searchInput" class="form-control" placeholder="Cari username, role, linked...">
+      </div>
+      <div class="d-flex gap-2">
+        <button type="button" id="btnExportCsv" class="btn btn-sm btn-outline-primary">Export CSV</button>
+        <button type="button" id="btnExportPdfAll" class="btn btn-sm btn-outline-danger">Export PDF</button>
+      </div>
+    </div>
+
+    <div class="table-responsive mb-5">
+      <table class="table table-striped" id="akunTable">
+        <thead>
+          <tr>
+            <th style="width:60px">No</th>
+            <th>Username</th>
+            <th style="width:120px">Role</th>
+            <th>Linked</th>
+            <th style="width:120px">Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="akunTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module" src="assets/js/pages/akun.js"></script>
+</body>
+</html>
+

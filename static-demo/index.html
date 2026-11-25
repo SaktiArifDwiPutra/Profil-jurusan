@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profil Jurusan RPL</title>
+
+  <link rel="icon" type="image/jpeg" href="assets/logo/logoril3.jpeg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/print.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <div id="app-header"></div>
+
+  <div class="container mt-4 flex-grow-1">
+    <div class="card mb-4 shadow-sm border-0 overflow-hidden"
+         style="background:url('assets/bg/Background.png') no-repeat center center;
+                background-size:cover; min-height:350px;">
+    </div>
+
+    <div class="row">
+      <div class="col-md-8">
+
+        <div class="card mb-4 p-4 shadow-sm">
+          <h1 class="mb-1 fw-bold">Dashboard</h1>
+          <p class="mb-0 text-muted">Selamat datang di web Profil Jurusan RPL 👋</p>
+          <p class="mb-0 text-muted">Silahkan login untuk membuka berbagai fitur</p>
+        </div>
+
+        <h4 class="fw-semibold mb-3">Berita Terbaru</h4>
+        <div id="home-berita-list"></div>
+
+        <div class="card p-4 mb-4 shadow-sm">
+          <h4>Tentang Jurusan</h4>
+          <p>
+            Jurusan PPLG adalah kompetensi keahlian di SMK yang fokus pada pengembangan perangkat lunak seperti aplikasi web, mobile, dan game.
+            Siswa mempelajari pemrograman, basis data, dan desain antarmuka sesuai kebutuhan industri.
+            Lulusan PPLG memiliki peluang karier luas di bidang teknologi informasi, seperti software developer, web developer, mobile app developer, dan game developer.
+          </p>
+          <ul class="mb-0">
+            <li>Visi:
+              Menjadi jurusan unggulan dalam bidang pengembangan perangkat lunak dan gim yang menghasilkan lulusan kompeten, kreatif, dan siap bersaing di dunia industri serta dunia kerja.
+            </li>
+            <li>Misi: <br>
+              <strong>1.</strong>Menyelenggarakan pendidikan dan pembelajaran pemrograman berbasis teknologi terkini. Membekali peserta didik dengan keterampilan pengembangan aplikasi web, mobile, dan gim.<br>
+              <strong>2.</strong>Menanamkan sikap disiplin, tanggung jawab, dan etos kerja profesional.<br>
+              <strong>3.</strong>Mendorong kreativitas, inovasi, dan kemampuan problem solving siswa.<br>
+              <strong>4.</strong>Menjalin kerja sama dengan dunia industri untuk meningkatkan kualitas lulusan.
+            </li>
+          </ul>
+        </div>
+
+        <div class="card p-4 mb-4 shadow-sm">
+          <h5>Mata Pelajaran</h5>
+          <div id="home-mapel-list" class="d-flex flex-wrap gap-2"></div>
+          <a href="login.html" id="btn-home-mapel" class="btn btn-outline-primary mt-3">Login terlebih dahulu</a>
+        </div>
+
+      </div>
+
+      <div class="col-md-4">
+
+        <div class="card p-4 mb-4 shadow-sm text-center">
+          <h6 class="fw-semibold mb-3">Statistik</h6>
+          <div class="row">
+            <div class="col-6">
+              <h3 id="stat-siswa">0</h3>
+              <small>Siswa</small>
+            </div>
+            <div class="col-6">
+              <h3 id="stat-guru">0</h3>
+              <small>Guru</small>
+            </div>
+            <div class="col-6">
+              <h3 id="stat-kelas">0</h3>
+              <small>Kelas</small>
+            </div>
+            <div class="col-6">
+              <h3 id="stat-mapel">0</h3>
+              <small>Mapel</small>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p-4 mb-4 shadow-sm">
+          <h6>Beberapa Guru</h6>
+          <ul id="home-guru-list" class="list-group list-group-flush w-100"></ul>
+          <div class="mt-2">
+            <a href="login.html" id="btn-home-guru" class="btn btn-outline-primary btn-sm">Login terlebih dahulu</a>
+          </div>
+        </div>
+
+        <div class="card p-4 mb-4 shadow-sm">
+          <h6>Daftar Kelas</h6>
+          <ul id="home-kelas-list" class="list-group list-group-flush w-100"></ul>
+          <div class="mt-2">
+            <a href="login.html" id="btn-home-kelas" class="btn btn-outline-primary btn-sm">Login terlebih dahulu</a>
+          </div>
+        </div>
+
+        <div class="card p-4 mb-4 shadow-sm">
+          <h6>Beberapa Siswa</h6>
+          <ul id="home-siswa-list" class="list-group list-group-flush w-100"></ul>
+          <div class="mt-2">
+            <a href="login.html" id="btn-home-siswa" class="btn btn-outline-primary btn-sm">Login terlebih dahulu</a>
+          </div>
+        </div>
+
+        <div class="card p-4 shadow-sm">
+          <h6 class="fw-semibold mb-3">Kontak</h6>
+          <small>Alamat: Sekolah / Jurusan</small>
+          <small>Telepon: (021) xxxx xxxx</small>
+          <small>Email: sekretariat@sekolah.sch.id</small>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module" src="assets/js/pages/home.js"></script>
+</body>
+</html>
+

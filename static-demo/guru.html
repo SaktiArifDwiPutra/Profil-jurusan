@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Guru - Profil Jurusan RPL</title>
+
+  <link rel="icon" type="image/jpeg" href="assets/logo/logoril3.jpeg">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/print.css">
+</head>
+<body class="d-flex flex-column min-vh-100 bg-light">
+
+  <div id="app-header"></div>
+
+  <div class="container mt-4 flex-grow-1">
+    <div class="layout-golden">
+      <div class="left-col">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="mb-0">Data Guru</h4>
+          <button id="btnToggleAddGuru" class="btn btn-success d-none" data-bs-toggle="collapse" data-bs-target="#formAddGuru">
+            Tambah Guru
+          </button>
+        </div>
+
+        <div id="formAddGuru" class="collapse mb-3 card p-3 d-none">
+          <form id="formTambahGuru" novalidate>
+            <div class="row g-2 mb-2">
+              <div class="col-md-3">
+                <input id="add-nip" name="nip" class="form-control" placeholder="NIP (18 Digit)"
+                       minlength="18" maxlength="18" inputmode="numeric">
+              </div>
+              <div class="col-md-3">
+                <input id="add-nama" name="nama" class="form-control" placeholder="Nama" required>
+              </div>
+              <div class="col-md-2">
+                <select id="add-jk" name="jenis_kelamin" class="form-select" required>
+                  <option value="Laki-laki">Laki-laki</option>
+                  <option value="Perempuan">Perempuan</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <input id="add-email" type="email" name="email" class="form-control" placeholder="Email (contoh@gmail.com)" required>
+              </div>
+              <div class="col-md-2">
+                <input id="add-nohp" name="no_hp" class="form-control" placeholder="No HP" required inputmode="numeric">
+              </div>
+            </div>
+
+            <label class="form-label">Mapel Diampu (opsional)</label>
+            <div id="ampu-list-new" class="mb-2"></div>
+            <div class="mb-3">
+              <button type="button" id="btnAddAmpuNew" class="btn btn-sm btn-success">Tambah Mapel</button>
+            </div>
+            <button type="submit" class="btn btn-primary">Simpan</button>
+          </form>
+        </div>
+
+        <div class="d-flex justify-content-between mb-2 align-items-center flex-wrap gap-2">
+          <div class="input-group w-50" style="min-width:220px;">
+            <span class="input-group-text"><i class="fa fa-search"></i></span>
+            <input type="text" id="searchInputGuru" class="form-control" placeholder="Cari guru (Nama, NIP, Mapel)...">
+          </div>
+          <div class="d-flex gap-2">
+            <button type="button" id="btnExportCsv" class="btn btn-outline-primary btn-sm">Export CSV</button>
+            <button type="button" id="btnExportPdfAll" class="btn btn-outline-danger btn-sm">Export PDF</button>
+          </div>
+        </div>
+
+        <div id="guruContainer" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mb-5"></div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="stat-card">
+          <h6>Total Guru</h6>
+          <div class="stat-value" id="stat-total-guru">0</div>
+        </div>
+        <div class="stat-card">
+          <h6>Jenis Kelamin</h6>
+          <div id="stat-jk">Laki: 0 &bull; Perempuan: 0</div>
+        </div>
+        <div class="stat-card">
+          <h6>Jumlah Mapel Unik</h6>
+          <div id="stat-mapel-unik">0</div>
+        </div>
+        <div class="stat-card">
+          <h6>Jumlah Kelas Terlibat</h6>
+          <div id="stat-kelas-unik">0</div>
+        </div>
+        <div class="stat-card">
+          <h6>Terakhir Ditambahkan</h6>
+          <div class="recent-list" id="recent-guru-list"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- Detail / Edit Modal -->
+  <div class="modal fade" id="detailModalGuru" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" style="padding-left: 40px;" id="detailModalGuruLabel">
+            Detail Guru: <span id="modal-guru-nama"></span>
+          </h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+          <div id="modal-guru-view">
+            <p><strong>NIP:</strong> <span id="detail-nip"></span></p>
+            <p><strong>Email:</strong> <span id="detail-email"></span></p>
+            <p><strong>Jenis Kelamin:</strong> <span id="detail-jk"></span></p>
+            <p><strong>No HP:</strong> <span id="detail-nohp"></span></p>
+            <hr>
+            <p class="mb-2"><strong>Mapel Diampu:</strong></p>
+            <div style="padding-left: 20px;" id="detail-ampu-list" class="bg-light p-2 rounded"></div>
+          </div>
+
+          <div id="modal-guru-edit" style="display:none;">
+            <form id="guruEditForm" novalidate>
+              <input type="hidden" id="edit-id-guru">
+              <div class="row g-2 mb-3">
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">NIP</label>
+                  <input type="text" id="edit-nip" class="form-control" placeholder="NIP (18 Digit)"
+                         minlength="18" maxlength="18" inputmode="numeric">
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label small text-muted">Nama Lengkap</label>
+                  <input type="text" id="edit-nama" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted">Jenis Kelamin</label>
+                  <select id="edit-jk" class="form-select" required>
+                    <option value="Laki-laki">Laki-laki</option>
+                    <option value="Perempuan">Perempuan</option>
+                  </select>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted">Email</label>
+                  <input type="email" id="edit-email" class="form-control" required>
+                </div>
+                <div class="col-md-4">
+                  <label class="form-label small text-muted">No HP</label>
+                  <input type="text" id="edit-nohp" class="form-control" required inputmode="numeric">
+                </div>
+              </div>
+
+              <hr>
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <label class="form-label fw-bold mb-0">Mapel Diampu</label>
+                <button type="button" id="btnAddAmpuEdit" class="btn btn-sm btn-success">
+                  <i class="fa fa-plus"></i> Tambah Mapel
+                </button>
+              </div>
+              <div id="edit-ampu-list"></div>
+            </form>
+          </div>
+        </div>
+
+        <div class="modal-footer d-flex flex-column align-items-center pt-0">
+          <div id="view-buttons" class="d-flex gap-2">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+            <button type="button" id="btnModalEdit" class="btn btn-primary d-none">Edit</button>
+            <button type="button" id="btnModalDelete" class="btn btn-danger d-none">Hapus</button>
+          </div>
+
+          <div id="edit-buttons" style="display:none;" class="gap-2">
+            <button type="button" id="btnModalSave" class="btn btn-primary">Simpan</button>
+            <button type="button" id="btnModalCancelEdit" class="btn btn-secondary">Batal</button>
+          </div>
+
+          <div class="mt-2">
+            <button type="button" id="btn-export-guru-pdf" class="btn btn-sm btn-outline-danger">Export PDF</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="app-footer"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script type="module" src="assets/js/pages/guru.js"></script>
+</body>
+</html>
+
